@@ -1,18 +1,33 @@
 import React from 'react';
-import { 
-  withAuthenticator
-  , AmplifySignOut 
-} from '@aws-amplify/ui-react/legacy';
+// import { 
+//   withAuthenticator
+// } from '@aws-amplify/ui-react';
+
+import { AmplifyProvider, Authenticator } from '@aws-amplify/ui-react';
+import '@aws-amplify/ui-react/styles.css';
 
 const App = () => {
+    
   return (
-    <div>
-      <h1>
-        Hello from AWS Amplify
-      </h1>
-      <AmplifySignOut />
-    </div>
+    <AmplifyProvider>
+      <Authenticator variation='modal'>
+        {
+          ({ signOut, user }) => (
+            <>
+              <h1>
+                Hello {user?.username}, from AWS Amplify
+              </h1>
+              <button
+                onClick={signOut}
+              >
+                Sign Out
+              </button>
+            </>
+          )
+        }
+      </Authenticator>
+    </AmplifyProvider>
   );
 };
 
-export default withAuthenticator(App);
+export default App;
